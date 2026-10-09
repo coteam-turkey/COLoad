@@ -1,5 +1,8 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+import os
 import yt_dlp
 
 app = FastAPI(title="COLoad API")
@@ -12,9 +15,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Eğer CSS, JS veya resim klasörünüz varsa (örn: static klasörü) sorunsuz yüklenmesi için:
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
 @app.get("/")
 def home():
-    return {"status": "ok", "message": "Video Downloader API Calisiyor"}
+    # Ana sayfaya girildiğinde direkt index.html dosyasını döndürür
+    return FileResponse("index.html")
 
 @app.get("/api/download")
 def get_video_info(url: str = Query(..., description="Indirilecek video baglantisi")):
