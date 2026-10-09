@@ -5,6 +5,11 @@ from fastapi.staticfiles import StaticFiles
 import os
 import yt_dlp
 
+cookies_content = os.getenv("COOKIES_CONTENT")
+if cookies_content:
+    with open("cookies.txt", "w", encoding="utf-8") as f:
+        f.write(cookies_content)
+
 app = FastAPI(title="COLoad API")
 
 app.add_middleware(
