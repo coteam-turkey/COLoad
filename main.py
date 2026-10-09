@@ -33,6 +33,7 @@ def get_video_info(url: str = Query(..., description="Indirilecek video baglanti
         'format': 'best',
         'nocheckcertificate': True,
         'geo_bypass': True,
+        'cookiefile': 'cookies.txt',  # Çerez dosyanız buraya eklendi
         'extractor_args': {
             'youtube': {
                 'player_client': ['ios_embedded', 'tv_embedded', 'mweb'],
